@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f2ec" />
+    <meta name="description" content="Find a useful task that fits the time and energy you have right now." />
+    <title>SpareMinute — find your next small win</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="SpareMinute home">
+          <span class="brand-mark" aria-hidden="true"><span></span></span>
+          <span>spare<span class="brand-light">minute</span></span>
+        </a>
+        <p class="privacy-pill"><span class="privacy-dot" aria-hidden="true"></span>Your list stays on this device</p>
+      </header>
+
+      <main id="top">
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>A little time can go a long way</p>
+            <h1 id="hero-title">Find your next<br /><em>small win.</em></h1>
+            <p class="hero-description">Tell us how much time and energy you have. We’ll find a task that fits your moment.</p>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="art-orbit orbit-one"></div>
+            <div class="art-orbit orbit-two"></div>
+            <div class="art-sun"><span>15</span><small>MIN</small></div>
+            <span class="art-spark spark-one">✳</span>
+            <span class="art-spark spark-two">✦</span>
+            <span class="art-note">make it<br />count</span>
+          </div>
+        </section>
+
+        <div id="storage-notice" class="notice notice-warning" role="status" hidden></div>
+
+        <section class="workspace" aria-label="Task picker">
+          <div class="left-column">
+            <section class="panel moment-panel" aria-labelledby="moment-title">
+              <div class="section-heading">
+                <span class="step-number">01</span>
+                <div>
+                  <h2 id="moment-title">Set your moment</h2>
+                  <p>What do you have to work with?</p>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="time-limit">I have about</label>
+                <div class="time-control">
+                  <select id="time-limit" name="time-limit">
+                    <option value="5">5 minutes</option>
+                    <option value="10">10 minutes</option>
+                    <option value="15" selected>15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="45">45 minutes</option>
+                    <option value="60">1 hour</option>
+                    <option value="custom">A different amount</option>
+                  </select>
+                  <span class="select-chevron" aria-hidden="true">⌄</span>
+                </div>
+                <div id="custom-time-wrap" class="custom-time-wrap" hidden>
+                  <label class="sr-only" for="custom-time">Custom available minutes</label>
+                  <input id="custom-time" name="custom-time" type="number" min="1" max="240" step="1" value="20" inputmode="numeric" aria-describedby="custom-time-error" />
+                  <span>minutes</span>
+                </div>
+                <p id="custom-time-error" class="field-error" hidden></p>
+              </div>
+
+              <fieldset class="energy-group">
+                <legend class="field-label">My energy is</legend>
+                <div class="energy-options">
+                  <label class="energy-option">
+                    <input type="radio" name="energy" value="low" />
+                    <span class="energy-card">
+                      <span class="energy-icon energy-icon-low" aria-hidden="true">◔</span>
+                      <span class="energy-name">Low</span>
+                      <span class="energy-hint">keep it easy</span>
+                    </span>
+                  </label>
+                  <label class="energy-option">
+                    <input type="radio" name="energy" value="medium" checked />
+                    <span class="energy-card">
+                      <span class="energy-icon energy-icon-medium" aria-hidden="true">◑</span>
+                      <span class="energy-name">Medium</span>
+                      <span class="energy-hint">steady pace</span>
+                    </span>
+                  </label>
+                  <label class="energy-option">
+                    <input type="radio" name="energy" value="high" />
+                    <span class="energy-card">
+                      <span class="energy-icon energy-icon-high" aria-hidden="true">◕</span>
+                      <span class="energy-name">High</span>
+                      <span class="energy-hint">ready to focus</span>
+                    </span>
+                  </label>
+                </div>
+              </fieldset>
+
+              <div class="moment-note"><span aria-hidden="true">✦</span> Your plan can be small. Starting is the win.</div>
+            </section>
+
+            <section class="panel add-panel" aria-labelledby="add-title">
+              <div class="section-heading section-heading-compact">
+                <span class="step-number">02</span>
+                <div>
+                  <h2 id="add-title">Add to your list</h2>
+                  <p>Keep it simple. You can change it later.</p>
+                </div>
+              </div>
+
+              <form id="task-form" novalidate>
+                <div class="form-field">
+                  <label class="field-label" for="task-title">What needs doing?</label>
+                  <input id="task-title" name="title" type="text" maxlength="120" placeholder="e.g. Clear the kitchen counter" autocomplete="off" aria-describedby="title-error" required />
+                  <p id="title-error" class="field-error" hidden></p>
+                </div>
+                <div class="form-row">
+                  <div class="form-field duration-field">
+                    <label class="field-label" for="task-minutes">About how long?</label>
+                    <div class="input-with-suffix">
+                      <input id="task-minutes" name="minutes" type="number" min="1" max="240" step="1" value="15" inputmode="numeric" aria-describedby="minutes-error" required />
+                      <span>min</span>
+                    </div>
+                    <p id="minutes-error" class="field-error" hidden></p>
+                  </div>
+                  <div class="form-field effort-field">
+                    <label class="field-label" for="task-effort">Effort</label>
+                    <div class="time-control">
+                      <select id="task-effort" name="effort">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                      </select>
+                      <span class="select-chevron" aria-hidden="true">⌄</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button id="submit-task" class="button button-primary" type="submit"><span class="button-plus" aria-hidden="true">+</span><span>Add task</span></button>
+                  <button id="cancel-edit" class="button button-quiet" type="button" hidden>Cancel edit</button>
+                </div>
+              </form>
+              <p id="form-status" class="sr-only" role="status" aria-live="polite"></p>
+            </section>
+          </div>
+
+          <section class="panel matches-panel" aria-labelledby="matches-title">
+            <div class="matches-heading">
+              <div class="section-heading section-heading-compact">
+                <span class="step-number">03</span>
+                <div>
+                  <h2 id="matches-title">A good next step</h2>
+                  <p id="matches-subtitle">A task that fits your moment.</p>
+                </div>
+              </div>
+              <span id="match-count" class="match-count" aria-label="Matching task count">0</span>
+            </div>
+
+            <div id="empty-state" class="empty-state" hidden>
+              <div class="empty-illustration" aria-hidden="true"><span class="empty-sun"></span><span class="empty-sprout">⌁</span></div>
+              <h3 id="empty-title">Make room for a small win</h3>
+              <p id="empty-copy">Add a few tasks and we’ll find one that fits the time and energy you have.</p>
+              <button id="add-examples" class="button button-outline" type="button">Try a few examples <span aria-hidden="true">↗</span></button>
+            </div>
+
+            <ol id="match-list" class="task-list" aria-label="Matching tasks" aria-live="polite"></ol>
+
+            <details id="completed-section" class="completed-section" hidden>
+              <summary><span>Completed</span><span id="completed-count" class="completed-count">0</span></summary>
+              <ul id="completed-list" class="completed-list" aria-label="Completed tasks"></ul>
+            </details>
+
+            <div class="matches-footnote"><span class="footnote-spark" aria-hidden="true">✦</span> Pick one. The rest can wait.</div>
+          </section>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Built for the in-between moments.</span>
+        <span class="footer-mark">SPAREMINUTE <span aria-hidden="true">·</span> 01</span>
+      </footer>
+    </div>
+  </body>
+</html>
